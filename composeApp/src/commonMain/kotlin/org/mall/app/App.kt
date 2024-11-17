@@ -17,6 +17,8 @@ import mallproject.composeapp.generated.resources.Res
 import mallproject.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.mall.app.presentation.navigation.DefaultWindowManager
+import org.mall.app.presentation.navigation.LocalWindowManager
 import org.mall.app.presentation.screen.home.Configuration
 import org.mall.app.presentation.screen.home.HomeScreen
 
@@ -24,7 +26,11 @@ import org.mall.app.presentation.screen.home.HomeScreen
 @Preview
 fun App() {
     MaterialTheme {
-        HomeScreen()
+        val windowManager = remember { DefaultWindowManager() }
+        CompositionLocalProvider(LocalWindowManager provides windowManager) {
+            HomeScreen()
+            windowManager.DisplayWindows()
+        }
     }
 }
 

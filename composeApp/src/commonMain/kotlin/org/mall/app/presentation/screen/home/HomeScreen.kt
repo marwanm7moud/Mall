@@ -43,6 +43,8 @@ import org.mall.app.data.model.Order
 import org.mall.app.presentation.base.EventHandler
 import org.mall.app.presentation.composables.MallEditTextWithTitle
 import org.mall.app.presentation.composables.MallScaffold
+import org.mall.app.presentation.navigation.LocalWindowManager
+import org.mall.app.presentation.navigation.WindowRoute
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
@@ -64,6 +66,7 @@ private fun HomeContent(
     listener: HomeInteractionListener
 ) {
     val lazyListState = rememberLazyListState()
+    val windowManager = LocalWindowManager.current
 
     MallScaffold(
         isLoading = state.isLoading,
@@ -71,106 +74,16 @@ private fun HomeContent(
         showError = state.errorDialogueIsVisible,
         onDismissError = listener::onDismissError,
     ) {
-        Row() {
-            Column(Modifier.weight(1f).fillMaxHeight()) {
-                MallEditTextWithTitle(
-                    value = state.url,
-                    onValueChange = listener::onChangeUrl,
-                    title = "URL",
-                )
-                MallEditTextWithTitle(
-                    value = state.keyPath,
-                    onValueChange = listener::onChangeKeyPath,
-                    title = "Key Path",
-                )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    MallEditTextWithTitle(
-                        value = state.username,
-                        onValueChange = listener::onChangeUsername,
-                        title = "Username",
-                        modifier = Modifier.weight(1f)
-                    )
-                    MallEditTextWithTitle(
-                        value = state.password,
-                        onValueChange = listener::onChangePassword,
-                        title = "Password",
-                        modifier = Modifier.weight(1f)
-                    )
-                    MallEditTextWithTitle(
-                        value = state.bearer,
-                        onValueChange = listener::onChangeBearer,
-                        title = "Bearer Token",
-                        modifier = Modifier.weight(1f)
-                    )
+        Column() {
+            Column(Modifier.fillMaxWidth()) {
+                Button(onClick = {windowManager.openWindow(WindowRoute.SetupScreenRoute)}) {
+                    Text("open setup")
                 }
-                FlowRow(
-                    maxItemsInEachRow = 3
-                ) {
-                    OutlinedTextField(
-                        value = state.keyMapping.get("number") ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("number",it)
-                        },
-                        label = { Text("invoice Number") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["date"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("date",it)
-                        },
-                        label = { Text("invoice Date") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["subtotal"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("subtotal",it)
-                        },
-                        label = { Text("subtotal") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["tax"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("tax",it)
-                        },
-                        label = { Text("tax") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["total"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("total",it)
-                        },
-                        label = { Text("total") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["service"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("service",it)
-                        },
-                        label = { Text("service") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    OutlinedTextField(
-                        value = state.keyMapping["discount"] ?:"",
-                        onValueChange = {
-                            listener.onChangeKeyMapping("discount",it)
-                        },
-                        label = { Text("discount") },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-
                 Button(onClick = listener::onClickGetData) {
                     Text("Fetch Data")
                 }
             }
-            Column(Modifier.weight(1f).fillMaxHeight()) {
+            Column(Modifier.weight(1f).fillMaxWidth()) {
                 Box(
                     modifier = Modifier
                         .fillMaxHeight().shadow(

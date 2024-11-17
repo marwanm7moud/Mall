@@ -46,7 +46,7 @@ fun MallEditText(
     )
     Box(
         modifier = modifier
-            .height(minLines * 40.dp)
+            .height(minLines * 32.dp)
             .background(backgroundColor, RoundedCornerShape(8.dp))
             .border(0.5.dp, Color(0xffE8E8E8), RoundedCornerShape(8.dp))
             .padding(horizontal = 8.dp, vertical = 8.dp),
@@ -62,7 +62,7 @@ fun MallEditText(
                         text = hint,
                         color = Color(0xFF8F8F8F),
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 8.sp,
                             fontWeight = FontWeight.Medium,
                             letterSpacing = 0.sp
                         )
@@ -83,7 +83,7 @@ fun MallEditText(
                                 onValueChange(it)
                         },
                         textStyle = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 8.sp,
                             fontWeight = FontWeight.Medium,
                             letterSpacing = 0.sp
                         )
@@ -110,7 +110,7 @@ fun MallEditTextWithTitle(
         Text(
             text = title,
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.SemiBold,
             )
         )
